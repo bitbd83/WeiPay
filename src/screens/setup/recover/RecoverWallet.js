@@ -6,6 +6,7 @@ import { Button, FormLabel, FormInput, FormValidationMessage, Card } from 'react
 import { newWalletCreation } from '../../../actions/ActionCreator'; //gonna save this passphrase to state
 import provider from '../../../constants/Providers';
 import LinearButton from '../../../components/LinearGradient/LinearButton';
+import BackNavBar from '../../../components/navigation/BackNavBar';
 const ethers = require('ethers');
 
 /**
@@ -47,6 +48,13 @@ class RecoverWallet extends Component {
         }
     };
 
+    navigateBack = () => {
+        const navigateBackToIndex = NavigationActions.navigate({
+            routeName: "createWalletNameRecovered",
+        });
+        this.props.navigation.dispatch(navigateBackToIndex);
+    }
+
     /**
      * Set the local state to keep track of the mnemonic entered to recover the wallet
      * @param {Object} props 
@@ -73,16 +81,8 @@ class RecoverWallet extends Component {
      */
     render() {
         return (
-            <View style={styles.mainContainer}>   
-             <View style={styles.headerBack}> 
-                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('createWalletNameRecovered')} >
-                    <Image
-                        source={require('../../../assets/icons/back.png')}
-                        style={{height:20, width:20}}
-                    /> 
-                </TouchableOpacity>
-            </View>   
+            <View style={styles.mainContainer}>               
+                <BackNavBar onClickFunction={this.navigateBack }  />
                 <Text style={styles.textHeader} >Recovery Passphrase</Text>                               
                 <View style={styles.contentContainer} >
                     <Card containerStyle={{ 

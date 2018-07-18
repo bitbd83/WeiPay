@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { FormLabel, FormInput, FormValidationMessage, Card } from 'react-native-elements';
 import { newWalletCreation, newWalletNameEntry } from '../../../actions/ActionCreator';
 import LinearButton   from '../../../components/LinearGradient/LinearButton'
+import BackNavBar from '../../../components/navigation/BackNavBar';
 const ethers = require('ethers');
 
 /**
@@ -25,6 +26,13 @@ class CreateWalletName extends Component {
         this.props.navigation.dispatch(navigateToPassphrase);
     };
 
+    navigateBack = () => {
+        const navigateBackToIndex = NavigationActions.navigate({
+            routeName: "createOrRestore",
+        });
+        this.props.navigation.dispatch(navigateBackToIndex);
+    }
+
     /**
      * Executes the action "newWalletNameEntry" with "name" as the parameter
      * in order to update the name of the wallet in the global state variable
@@ -41,7 +49,8 @@ class CreateWalletName extends Component {
     render() {
         return (
             <View style={styles.mainContainer}>    
-                <View style={styles.headerBack}> 
+                <BackNavBar onClickFunction={this.navigateBack }  />
+                {/* <View style={styles.headerBack}> 
                     <TouchableOpacity
                         onPress={() => this.props.navigation.navigate('createOrRestore')} >
                         <Image
@@ -49,7 +58,7 @@ class CreateWalletName extends Component {
                             style={{height:20, width:20}}
                         /> 
                     </TouchableOpacity>
-                </View>   
+                </View>    */}
                 <Text style={styles.textHeader} >Wallet Name</Text>                               
                 <View style={styles.contentContainer} >
                     <Card containerStyle={{ 

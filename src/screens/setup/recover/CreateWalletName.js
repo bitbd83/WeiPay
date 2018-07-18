@@ -7,6 +7,7 @@ import { Input } from '../../../components/common/Input';
 import { newWalletCreation, newWalletNameEntry } from '../../../actions/ActionCreator';
 import provider from '../../../constants/Providers';
 import LinearButton from '../../../components/LinearGradient/LinearButton';
+import BackNavBar from '../../../components/navigation/BackNavBar';
 const ethers = require('ethers');
 
 /**
@@ -22,6 +23,13 @@ class CreateWalletName extends Component {
         const navigateToPassphrase = NavigationActions.navigate({ routeName: "recoverWallet" });
         this.props.navigation.dispatch(navigateToPassphrase);
     };
+
+    navigateBack = () => {
+        const navigateBackToIndex = NavigationActions.navigate({
+            routeName: "createOrRestore",
+        });
+        this.props.navigation.dispatch(navigateBackToIndex);
+    }
 
     /**
      * Executes the action "newWalletNameEntry" with "name" as the parameter
@@ -39,7 +47,8 @@ class CreateWalletName extends Component {
     render() {
         return (
             <View style={styles.mainContainer}>   
-                <View style={styles.headerBack}> 
+             <BackNavBar onClickFunction={this.navigateBack }  />
+                {/* <View style={styles.headerBack}> 
                     <TouchableOpacity
                         onPress={() => this.props.navigation.navigate('createOrRestore')} >
                         <Image
@@ -47,7 +56,7 @@ class CreateWalletName extends Component {
                             style={{height:20, width:20}}
                         /> 
                     </TouchableOpacity>
-                  </View>   
+                  </View>    */}
                 <Text style={styles.textHeader} >Wallet Name</Text>                               
                 <View style={styles.contentContainer} >
                     <Card containerStyle={{ 
