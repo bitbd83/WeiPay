@@ -75,7 +75,11 @@ class Portfolio extends Component {
           onPress={() => {
             if(token.type == "PortfolioToken") {
               this.props.navigation.navigate("coinSend")
-            } else {
+            }
+            if(token.type == "ERC20") {
+              this.props.navigation.navigate(token.type, token)
+            }
+            else {
               this.props.navigation.navigate("coinSend")
             }
           }
