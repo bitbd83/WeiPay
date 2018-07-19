@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         flexDirection: 'row',
-        marginTop: Platform.OS === 'ios' ? '10%' : '5%',
+        marginTop: Platform.OS === 'ios' ? '10%' : '10%',
         ...Platform.select({
           ios: { backgroundColor: '#fafbfe'},
           android: { backgroundColor: '#fafbfe'}

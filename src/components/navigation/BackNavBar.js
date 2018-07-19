@@ -21,7 +21,7 @@ class BackNavBar extends Component {
 
 const styles = StyleSheet.create({
     headerBack: {
-        marginTop: Platform.OS === 'ios' ? '7.5%' : '5%',
+        marginTop: Platform.OS === 'ios' ? '7.5%' : '2%',
         ...Platform.select({
           ios: { backgroundColor: '#fafbfe'},
           android: { backgroundColor: '#fafbfe'}
