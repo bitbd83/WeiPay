@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { FormInput, FormLabel, Button } from 'react-native-elements';
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, DrawerNavigator } from "react-navigation";
 import { getQRCodeData } from '../../../../actions/ActionCreator';
 import provider from '../../../../constants/Providers';
 import { qrScannerInvoker } from '../../../../actions/ActionCreator';
 import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
+import MenuNav from '../../../../components/navigation/MenuNav';
+
+// import { DrawerNavigator } from '../../../../navigation/drawer/index';
+
 const ethers = require('ethers');
 const utils = ethers.utils;
 
@@ -183,10 +187,14 @@ class CoinSend extends Component {
     return (
       <View style={styles.mainContainer}>
 
-        <BackNavWithMenu 
+        {/* <BackNavWithMenu 
           backFunction = {this.navigateBack}
           menuFunction = {this.navigateMenu}
-        />
+        /> */}
+
+        <MenuNav onClickFunction={this.navigateMenu}/>
+        {/* <MenuNav onClickFunction={this.props.navigation.openDrawer()}/> */}
+       
 
         <View style={styles.contentContainer} >
           <View style={styles.form} >
@@ -248,9 +256,13 @@ class CoinSend extends Component {
  */
 const styles = StyleSheet.create({
   mainContainer: {
+    paddingTop: '5%',   
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start'
+    backgroundColor: "#fafbfe",
+    width:"100%", 
+    height:'100%'
+    // alignItems: 'center',
+    // justifyContent: 'flex-start'
   },
   contentContainer: {
     marginTop: 25

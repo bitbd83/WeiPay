@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ModalDropdown from 'react-native-modal-dropdown';
 import LinearButton from '../../../components/LinearGradient/LinearButton';
 import MenuNav from '../../../components/navigation/MenuNav';
+import BackNavBar from '../../../components/navigation/BackNavBar';
 import { NavigationActions } from "react-navigation";
 
 /**
@@ -132,8 +133,8 @@ class Portfolio extends Component {
   render() {
     return (
       <View style={styles.mainContainer} >  
-
-      <MenuNav onClickFunction={this.openDrawer}/>
+          {/* <BackNavBar onClickFunction={this.navigateBack }  /> */}
+         <MenuNav onClickFunction={this.openDrawer}/>
        {/* <View style={styles.headerMenu}> 
           <TouchableOpacity
               onPress={() => this.props.navigation.navigate('DrawerOpen')} >
@@ -175,12 +176,14 @@ class Portfolio extends Component {
  */
 const styles = StyleSheet.create({
   mainContainer : {
+    paddingTop: '5%',   
     flex: 1,
     backgroundColor: "#fafbfe",
     width:"100%", 
+    height:'100%'
   },
   headerMenu: {
-    marginTop: Platform.OS === 'ios' ? '10%' : '10%',
+    marginTop: Platform.OS === 'ios' ? '5%' : '5%',
     ...Platform.select({
       ios: { backgroundColor: '#fafbfe'},
       android: { backgroundColor: '#fafbfe'}
