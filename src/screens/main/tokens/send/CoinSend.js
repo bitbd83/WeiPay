@@ -5,7 +5,8 @@ import { FormInput, FormLabel, Button } from 'react-native-elements';
 import { NavigationActions } from "react-navigation";
 import { getQRCodeData } from '../../../../actions/ActionCreator';
 import provider from '../../../../constants/Providers';
-import { qrScannerInvoker } from '../../../../actions/ActionCreator'
+import { qrScannerInvoker } from '../../../../actions/ActionCreator';
+import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
 const ethers = require('ethers');
 const utils = ethers.utils;
 
@@ -160,6 +161,20 @@ class CoinSend extends Component {
     this.props.navigation.dispatch(navigateToQRScanner);
   };
 
+  navigateBack = () => {
+    const navigateBackToPortfolio = NavigationActions.navigate({
+      routeName: "Drawer",
+    });
+    this.props.navigation.dispatch(navigateBackToPortfolio);
+  }
+
+  navigateMenu = () => {
+    const navigateToMenu = NavigationActions.navigate({
+      routeName: "DrawerOpen",
+    });
+    this.props.navigation.dispatch(navigateToMenu);
+  }
+
   /**
    * Main Component Function
    * Returns the complete form required to send a transaction
@@ -167,6 +182,12 @@ class CoinSend extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
+
+        <BackNavWithMenu 
+          backFunction = {this.navigateBack}
+          menuFunction = {this.navigateMenu}
+        />
+
         <View style={styles.contentContainer} >
           <View style={styles.form} >
             <FormLabel>Send To </FormLabel>

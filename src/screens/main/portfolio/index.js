@@ -5,6 +5,8 @@ import { List, ListItem, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ModalDropdown from 'react-native-modal-dropdown';
 import LinearButton from '../../../components/LinearGradient/LinearButton';
+import MenuNav from '../../../components/navigation/MenuNav';
+import { NavigationActions } from "react-navigation";
 
 /**
  * Screen is used to display the wallet portfolio of the user, which contains the 
@@ -28,7 +30,12 @@ class Portfolio extends Component {
   navigate = () => {
     const navigateToAddToken = NavigationActions.navigate({ routeName: "AddToken" });
     this.props.navigation.dispatch(navigateToAddToken);
-};
+  };
+
+  openDrawer = () => {
+    const navigateToDrawer = NavigationActions.navigate({ routeName: "DrawerOpen" });
+    this.props.navigation.dispatch(navigateToDrawer);
+  }
 
   /**
    * Returns a ListItem component specific to the properties of the token parameter
@@ -125,7 +132,9 @@ class Portfolio extends Component {
   render() {
     return (
       <View style={styles.mainContainer} >  
-       <View style={styles.headerMenu}> 
+
+      <MenuNav onClickFunction={this.openDrawer}/>
+       {/* <View style={styles.headerMenu}> 
           <TouchableOpacity
               onPress={() => this.props.navigation.navigate('DrawerOpen')} >
               <Image
@@ -133,7 +142,7 @@ class Portfolio extends Component {
                   style={{height:13, width:22}}
               /> 
           </TouchableOpacity>
-        </View>   
+        </View>    */}
         <Text style={styles.textHeader} >Portfolio </Text>
 
         <View style={{ flexDirection: 'row'}}>
@@ -184,7 +193,7 @@ const styles = StyleSheet.create({
     fontFamily: "Cairo-Light",
     fontSize: 26,        
     marginLeft: '9%',
-    marginTop: '15%',
+    marginTop: '5%',
     color: '#1a1f3e',
   },
   headerValue : {   
