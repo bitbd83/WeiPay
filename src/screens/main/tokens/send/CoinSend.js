@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { FormInput, FormLabel, Button } from 'react-native-elements';
+import { FormInput, FormLabel, Button, Card } from 'react-native-elements';
 import { NavigationActions, DrawerNavigator } from "react-navigation";
 import { getQRCodeData } from '../../../../actions/ActionCreator';
 import provider from '../../../../constants/Providers';
@@ -9,9 +9,6 @@ import { qrScannerInvoker } from '../../../../actions/ActionCreator';
 import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
 import MenuNav from '../../../../components/navigation/MenuNav';
 import SecondaryCoinHeader from '../../../../components/navigation/SecondaryCoinHeader';
-
-// import { DrawerNavigator } from '../../../../navigation/drawer/index';
-
 const ethers = require('ethers');
 const utils = ethers.utils;
 
@@ -20,14 +17,6 @@ const utils = ethers.utils;
  * Screen used to conduct negative transactions (sending coins/tokens)
  */
 class CoinSend extends Component {
-  /**
-   * Sets the Tab header to "SEND"
-   */
-  // static navigationOptions = ({ navigation }) => {
-  //   return {
-  //     tabBarLabel: 'SEND'
-  //   }
-  // }
 
   /**
    * Initializes State to keep track of the
@@ -193,16 +182,58 @@ class CoinSend extends Component {
           menuFunction = {this.navigateMenu}
         /> 
     
-        <View style={{marginTop:'5%'}}> 
+        <View 
+          style={{paddingTop: Platform.OS === 'ios' ? '1%' : '2.5%' }}> 
           <SecondaryCoinHeader />
         </View>
-      
-     
-        {/* <MenuNav onClickFunction={this.navigateMenu}/> */}
-        {/* <MenuNav onClickFunction={this.props.navigation.openDrawer()}/> */}
-       
 
-        <View style={styles.contentContainer} >
+        <View style={{ width:'100%', alignItems:'center' }}>
+            <Card
+              containerStyle={{ 
+                width: '82%', 
+                height: '75%', 
+                borderRadius: 7.5, 
+                shadowOpacity: 0.5, 
+                shadowRadius: 1.3, 
+                shadowColor: '#dbdbdb',
+                shadowOffset: { width: 1, height: 2 },    
+                alignItems:'stretch'                
+            }}>
+                <Text style={styles.cardText}>
+                  Send Ether by scanning someone's QR code or public address.
+                </Text>
+                <FormInput
+                    placeholder={"Public Address"}
+                    onChangeText={this.renderAddress.bind(this)}
+                    inputStyle={{
+                      width:'100%', 
+                      flexWrap: 'wrap', 
+                      color:'#12c1a2', 
+                      fontSize:16, 
+                      fontFamily: "WorkSans-Light",
+                      letterSpacing:0.4
+                    }}
+                /> 
+                <FormInput
+                    placeholder={"Amount"}
+                    onChangeText={this.renderValue.bind(this)}
+                    inputStyle={{
+                      width:'100%', 
+                      flexWrap: 'wrap', 
+                      color:'#12c1a2',
+                      fontSize:16, 
+                      fontFamily: "WorkSans-Light",
+                      letterSpacing:0.4
+                    }}
+                /> 
+                <Text style={styles.transactionFee} > 
+                  Transaction Fee Total 0 Eth 0 USD
+                </Text>
+              
+            </Card>
+        </View>
+      
+        {/* <View style={styles.contentContainer} >
           <View style={styles.form} >
             <FormLabel>Send To </FormLabel>
             <View style={{ flexDirection: 'row' }}>
@@ -251,7 +282,7 @@ class CoinSend extends Component {
               onPress={() => this.sendTransaction()}
             />
           </View>
-        </View>
+        </View> */}
       </View >
     )
   }
@@ -267,8 +298,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fafbfe",
     width:"100%", 
     height:'100%'
-    // alignItems: 'center',
-    // justifyContent: 'flex-start'
   },
   contentContainer: {
     marginTop: 25
@@ -285,6 +314,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
+  cardText : {
+    paddingBottom: '20%',
+    paddingTop: '5%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    fontFamily: "WorkSans-Light",  
+    color: '#000000',
+    fontSize: 16,
+},
+  transactionFee : {
+    fontFamily: "WorkSans-Light",
+    fontSize: 9,
+    letterSpacing: 0.3,
+    paddingLeft: '5%',
+  }
 })
 
 /**

@@ -30,13 +30,14 @@ class BackNavWithMenu extends Component {
 }
 
 const styles = StyleSheet.create({
-
     container:{ 
-        // flex:1,
         flexDirection: 'row',
-        marginTop: Platform.OS === 'ios' ? '10%' : '10%',
+        marginTop: Platform.OS === 'ios' ? '5%' : '2%',
         marginRight: '9%',
-        marginLeft: '9%'
+        marginLeft: '9%',
+        height: Platform.OS === 'ios' ? 40 : 40,
+        backgroundColor: 'purple',
+        justifyContent:'center'
     },
      boxContainer:{
          flex:1,
@@ -51,41 +52,8 @@ const styles = StyleSheet.create({
      boxTwo: {
         backgroundColor: 'green',
         alignItems:'flex-end',
-        marginTop: '1%',
         zIndex: 100
     }
-    // header: {
-    //     marginTop: Platform.OS === 'ios' ? '5%' : '5%',
-    //     ...Platform.select({
-    //       ios: { backgroundColor: '#fafbfe'},
-    //       android: { backgroundColor: '#fafbfe'}
-    //     }),
-    //     // marginLeft: '9%',   
-    //     justifyContent:'center',
-    //     backgroundColor:"blue" ,
-    //     flexDirection: 'row',
-    //     alignItems:"stretch",
-    //     width:"100%",
-    //     // flex:1    
-    // },
-    // iconLeft: {
-    //     alignSelf:'flex-start', 
-    //     // justifyContent:'center', 
-    //     backgroundColor:"pink", 
-    //     width: '40%',
-    //     // marginLeft: '9%',
-    //     // marginTop: '5%'
-    //     left: '9%'
-    // }, 
-    // iconRight: {
-    //     right: '9%',
-    //     alignSelf:'flex-end', 
-    //     width: '40%',
-    //     backgroundColor: 'red'
-    //     // justifyContent:'center', 
-    //     // backgroundColor:"pink", 
-    //     // marginRight: '9%'
-    // }
 })
   
 
