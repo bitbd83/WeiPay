@@ -32,7 +32,7 @@ class BackNavWithMenu extends Component {
 const styles = StyleSheet.create({
 
     container:{ 
-        flex:1,
+        // flex:1,
         flexDirection: 'row',
         marginTop: Platform.OS === 'ios' ? '10%' : '10%',
         marginRight: '9%',

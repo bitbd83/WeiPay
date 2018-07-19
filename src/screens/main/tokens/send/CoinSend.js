@@ -8,6 +8,7 @@ import provider from '../../../../constants/Providers';
 import { qrScannerInvoker } from '../../../../actions/ActionCreator';
 import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
 import MenuNav from '../../../../components/navigation/MenuNav';
+import SecondaryCoinHeader from '../../../../components/navigation/SecondaryCoinHeader';
 
 // import { DrawerNavigator } from '../../../../navigation/drawer/index';
 
@@ -22,11 +23,11 @@ class CoinSend extends Component {
   /**
    * Sets the Tab header to "SEND"
    */
-  static navigationOptions = ({ navigation }) => {
-    return {
-      tabBarLabel: 'SEND'
-    }
-  }
+  // static navigationOptions = ({ navigation }) => {
+  //   return {
+  //     tabBarLabel: 'SEND'
+  //   }
+  // }
 
   /**
    * Initializes State to keep track of the
@@ -187,12 +188,17 @@ class CoinSend extends Component {
     return (
       <View style={styles.mainContainer}>
 
-        {/* <BackNavWithMenu 
+        <BackNavWithMenu 
           backFunction = {this.navigateBack}
           menuFunction = {this.navigateMenu}
-        /> */}
-
-        <MenuNav onClickFunction={this.navigateMenu}/>
+        /> 
+    
+        <View style={{marginTop:'5%'}}> 
+          <SecondaryCoinHeader />
+        </View>
+      
+     
+        {/* <MenuNav onClickFunction={this.navigateMenu}/> */}
         {/* <MenuNav onClickFunction={this.props.navigation.openDrawer()}/> */}
        
 
