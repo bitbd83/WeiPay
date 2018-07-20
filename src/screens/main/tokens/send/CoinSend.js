@@ -9,6 +9,8 @@ import { qrScannerInvoker } from '../../../../actions/ActionCreator';
 import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
 import MenuNav from '../../../../components/navigation/MenuNav';
 import SecondaryCoinHeader from '../../../../components/navigation/SecondaryCoinHeader';
+import ClearButton from '../../../../components/LinearGradient/ClearButton';
+import LinearButton from '../../../../components/LinearGradient/LinearButton';
 const ethers = require('ethers');
 const utils = ethers.utils;
 
@@ -245,6 +247,46 @@ class CoinSend extends Component {
               
             </Card>
         </View>
+
+         <View style={styles.btnContainer} >
+            <Button
+              title='Reset'
+              disabled={this.state.toAddress === "" && this.state.value == 0}
+              icon={{ size: 28 }}
+              buttonStyle={{
+                backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
+                height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 5, marginTop: 5.5
+              }}
+              textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
+              onPress={() => this.resetFields()} />
+            <Button
+              title='Next'
+              disabled={this.state.toAddress === "" || this.state.value == 0}
+              icon={{ size: 28 }}
+              buttonStyle={{
+                backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
+                height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 30, marginTop: 5.5
+              }}
+              textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
+              onPress={() => this.sendTransaction()}
+            />
+          </View>
+
+
+        {/* <View styles={{flexDirection:'row', justifyContent:"space-between", backgroundColor:"purple", flex:1}}> 
+          <View style={{backgroundColor: 'green', width: '40%'}}> 
+            <ClearButton 
+                  onClickFunction={this.navigate}
+                  buttonText="Reset"                  
+              />     
+          </View>
+          <View style={{ backgroundColor: 'blue', width: '40%'}}> 
+             <LinearButton 
+                  onClickFunction={this.navigate}
+                  buttonText="Next"                  
+              />        
+          </View>             
+        </View> */}
       
         {/* <View style={styles.contentContainer} >
           <View style={styles.form} >
