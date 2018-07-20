@@ -14,7 +14,6 @@ import CoinSend from '../../screens/main/tokens/send/CoinSend';
 import CoinHistory from '../../screens/main/tokens/history/CoinActivity';
 import CoinReceive from '../../screens/main/tokens/receive/CoinReceive';
 import PortfolioToken from '../../screens/main//portfolio/tabs/PortfolioToken';
-import ERC20Token from '../../screens/main//portfolio/tabs/ERC20Token';
 import AddToken from '../../screens/main/tokens/add/index';
 import addContact from '../../screens/main/menu/contacts/add/AddContact';
 import contacts from '../../screens/main/menu/contacts/index';
@@ -70,9 +69,6 @@ const navigator = StackNavigator({
   },
   PortfolioToken: {
     screen: PortfolioToken
-  },
-  ERC20: {
-    screen: ERC20Token
   },
   QCodeScanner: {
     screen: QrCodeScanner

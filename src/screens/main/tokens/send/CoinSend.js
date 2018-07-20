@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, Platform, Image, TouchableOpacity } from
 import { connect } from 'react-redux';
 import { FormInput, FormLabel, Button, Card } from 'react-native-elements';
 import { NavigationActions, DrawerNavigator } from "react-navigation";
-import { getQRCodeData } from '../../../../actions/ActionCreator';
+import { getQRCodeData, addTokenInfo } from '../../../../actions/ActionCreator';
 import provider from '../../../../constants/Providers';
 import { qrScannerInvoker } from '../../../../actions/ActionCreator';
 import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
@@ -192,6 +192,8 @@ class CoinSend extends Component {
    * Returns the complete form required to send a transaction
    */
   render() {
+    console.log("This . wallet ")
+    console.log(this.props.token)
     return (
       <View style={styles.mainContainer}>
         <BackNavWithMenu 
@@ -341,8 +343,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     wallet: state.newWallet.wallet,
-    addressData: state.newWallet.QrData
+    addressData: state.newWallet.QrData,
+    token: state.newWallet.current_token
   }
 }
 
-export default connect(mapStateToProps, { getQRCodeData, qrScannerInvoker })(CoinSend);
+export default connect(mapStateToProps, { getQRCodeData, qrScannerInvoker, addTokenInfo })(CoinSend);

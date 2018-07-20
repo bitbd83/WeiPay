@@ -8,6 +8,7 @@ import LinearButton from '../../../components/LinearGradient/LinearButton';
 import MenuNav from '../../../components/navigation/MenuNav';
 import BackNavBar from '../../../components/navigation/BackNavBar';
 import { NavigationActions } from "react-navigation";
+import {addTokenInfo} from '../../../actions/ActionCreator';
 
 /**
  * Screen is used to display the wallet portfolio of the user, which contains the 
@@ -73,11 +74,9 @@ class Portfolio extends Component {
             </View>
           }      
           onPress={() => {
-            if(token.type == "PortfolioToken") {
+            this.props.addTokenInfo(token)
+            if(token.type === "PortfolioToken") {
               this.props.navigation.navigate("coinSend")
-            }
-            if(token.type == "ERC20") {
-              this.props.navigation.navigate(token.type, token)
             }
             else {
               this.props.navigation.navigate("coinSend")
@@ -232,4 +231,4 @@ function mapStateToProps({ newWallet }) {
   return { newWallet }
 }
 
-export default connect(mapStateToProps)(Portfolio);
+export default connect(mapStateToProps, {addTokenInfo})(Portfolio);
