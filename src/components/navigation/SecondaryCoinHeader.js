@@ -13,7 +13,7 @@ class SecondaryCoinHeader extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.headerButton}
-                    onPress={this.props.zctivityFunction}>
+                    onPress={this.props.activityFunction}>
                     <Text style={styles.headerActivity}>Activity</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
@@ -60,6 +60,5 @@ const styles = StyleSheet.create({
         width: '33%'
       },
 })
-  
 
 export default SecondaryCoinHeader

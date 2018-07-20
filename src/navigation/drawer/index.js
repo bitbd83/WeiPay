@@ -16,8 +16,6 @@ import TokenReceive from '../../screens/main/tokens/receive/TokenReceive';
 import TokenSend from '../../screens/main/tokens/send/TokenSend';
 import AddToken from '../../screens/main/tokens/add/index';
 
-
-
 /**
  * Creates a componet containing the Slide in DrawerNavigator
  * @param {Object} props 

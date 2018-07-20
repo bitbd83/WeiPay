@@ -19,11 +19,9 @@ class RecoverWallet extends Component {
      * is valid otherwise an error is displayed
      */
     navigate = () => {
-
         const navigateToTokens = NavigationActions.navigate({
             routeName: "enableTokens",
         });
-
         try {
             /*
                 Hardcoded to private key for testing

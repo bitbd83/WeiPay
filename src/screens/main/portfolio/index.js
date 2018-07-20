@@ -133,35 +133,22 @@ class Portfolio extends Component {
   render() {
     return (
       <View style={styles.mainContainer} >  
-          {/* <BackNavBar onClickFunction={this.navigateBack }  /> */}
-         <MenuNav onClickFunction={this.openDrawer}/>
-       {/* <View style={styles.headerMenu}> 
-          <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('DrawerOpen')} >
-              <Image
-                  source={require('../../../assets/icons/menu.png')}
-                  style={{height:13, width:22}}
-              /> 
-          </TouchableOpacity>
-        </View>    */}
+        <MenuNav onClickFunction={this.openDrawer}/>
         <Text style={styles.textHeader} >Portfolio </Text>
-
         <View style={{ flexDirection: 'row'}}>
             <Text style={styles.headerValue}>0$</Text>   
             <Text style={styles.headerValueCurrency}> USD</Text> 
         </View>
-
         <View style={{alignItems:"stretch", width:"100%", marginLeft: '9%', marginTop:'2.5%'}}>
           <ScrollView style={{height:"70%"}} >
               <ListView dataSource={this.dataSource} renderRow={this.renderRow} removeClippedSubviews={false}  />
           </ScrollView>
         </View>
         <View style={styles.btnContainer} >
-            <LinearButton 
-                    onClickFunction={this.navigate}
-                    buttonText="Add Token or Coin"
-                    customStyles={styles.button}
-                />         
+          <LinearButton 
+                  onClickFunction={this.navigate}
+                  buttonText="Add Token or Coin"                  
+              />         
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.textFooter} >Powered by ChainSafe </Text>

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 import { FormInput, FormLabel, Button } from 'react-native-elements';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux'
+import { NavigationActions } from "react-navigation";
+import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
+import SecondaryCoinHeader from '../../../../components/navigation/SecondaryCoinHeader';
 
 /**
  * React Component
@@ -11,22 +14,24 @@ import { connect } from 'react-redux'
 class CoinReceive extends Component {
 
   /**
-   * Sets the Tab header to "RECEIVE"
-   */
-  static navigationOptions = ({ navigation }) => {
-    return {
-      tabBarLabel: 'RECEIVE'
-    }
-  }
-
-
-  /**
    * Returns a component that be used to display the Wallet public key in a form of text
    * and QrCode
    */
   render() {
     return (
       <View style={styles.mainContainer}>
+        <BackNavWithMenu 
+          backFunction = {this.navigateBack}
+          menuFunction = {this.navigateMenu}
+        /> 
+        <View 
+          style={{paddingTop: Platform.OS === 'ios' ? '1%' : '2.5%' }}> 
+          <SecondaryCoinHeader 
+            sendFunction={this.navigateToSend} 
+            activityFunction={this.navigateToActivity} 
+            receiveFunction={this.navigateToReceive}
+            />
+        </View>
         <View style={styles.contentContainer} >
           <View style={styles.form} >
             <View style={styles.imageContainer}>

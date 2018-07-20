@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, StyleSheet, TextInput, Text } from "react-native";
 import LinearGradient  from 'react-native-linear-gradient'
 
-
 /**
  * Component must have the following props:
  *      onClickFunction
@@ -47,7 +46,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',                                  
         marginLeft: '9%'
     },
-
     textStyles: {
         fontFamily: "Cairo-Regular",
         fontSize: 16,
@@ -56,5 +54,4 @@ const styles = StyleSheet.create({
     }
 })
   
-
 export default LinearButton

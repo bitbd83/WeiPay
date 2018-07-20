@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { CardSection } from '../../../../components/common/CardSection';
+import { NavigationActions } from "react-navigation";
+import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
+import SecondaryCoinHeader from '../../../../components/navigation/SecondaryCoinHeader';
 const axios = require('axios');
 const ethers = require('ethers');
 const moment = require('moment');
@@ -20,15 +23,6 @@ class CoinActivity extends Component {
       loaded: false,
       data: [],
       address: '0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a'
-    }
-  }
-
-  /**
-   * Sets the Tab header to "ACTIVITY"
-   */
-  static navigationOptions = ({ navigation }) => {
-    return {
-      tabBarLabel: 'ACTIVITY'
     }
   }
 
@@ -73,8 +67,15 @@ class CoinActivity extends Component {
    */
   render() {
     return (
-      <View style={styles.container}>
-
+      <View style={styles.mainContainer}>
+        <BackNavWithMenu 
+          backFunction = {this.navigateBack}
+          menuFunction = {this.navigateMenu}
+        /> 
+        <View 
+          style={{paddingTop: Platform.OS === 'ios' ? '1%' : '2.5%' }}> 
+          <SecondaryCoinHeader />
+        </View>
         <FlatList
           data={this.state.data}
           keyExtractor={(x, i) => i.toString()}
@@ -109,10 +110,12 @@ export default CoinActivity
  * Style
  */
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
+    paddingTop: '5%',   
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    backgroundColor: "#fafbfe",
+    width:"100%", 
+    height:'100%'
   },
   item: {
     padding: 5,

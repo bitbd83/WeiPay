@@ -27,14 +27,11 @@ class ClearButton extends Component {
                         <Text
                             style={[styles.textStyles, this.props.customTextStyles]}
                         >{this.props.buttonText}</Text>
-                        
                     </View>
                 </TouchableOpacity>
             </View>
         );
     }
-
-
 }
 
 const styles = StyleSheet.create({
@@ -48,15 +45,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',                                  
         marginLeft: '9%'
     },
-
     textStyles: {
         fontFamily: "Cairo-Regular",
         fontSize: 16,
         color: "#27c997",
         letterSpacing: 0.4
     }
-
 })
   
-
 export default ClearButton

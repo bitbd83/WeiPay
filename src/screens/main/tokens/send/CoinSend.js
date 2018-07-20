@@ -7,7 +7,6 @@ import { getQRCodeData } from '../../../../actions/ActionCreator';
 import provider from '../../../../constants/Providers';
 import { qrScannerInvoker } from '../../../../actions/ActionCreator';
 import BackNavWithMenu from '../../../../components/navigation/BackNavWithMenu';
-import MenuNav from '../../../../components/navigation/MenuNav';
 import SecondaryCoinHeader from '../../../../components/navigation/SecondaryCoinHeader';
 import ClearButton from '../../../../components/LinearGradient/ClearButton';
 import LinearButton from '../../../../components/LinearGradient/LinearButton';
@@ -168,7 +167,24 @@ class CoinSend extends Component {
     const navigateToMenu = NavigationActions.navigate({
       routeName: "DrawerOpen",
     });
+    console.log("navigate menu");
     this.props.navigation.dispatch(navigateToMenu);
+  }
+
+  navigateToActivity =() => {
+    const navigateToHistory = NavigationActions.navigate({
+      routeName: "coinHistory",
+    });
+    console.log("navigate activity");
+    this.props.navigation.dispatch(navigateToHistory);
+  }
+
+  navigateToReceive = () => {
+    const navigateToReceive = NavigationActions.navigate({
+      routeName: "coinReceive",
+    });
+    console.log("navigate receive");
+    this.props.navigation.dispatch(navigateToReceive);
   }
 
   /**
@@ -178,17 +194,18 @@ class CoinSend extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-
         <BackNavWithMenu 
           backFunction = {this.navigateBack}
           menuFunction = {this.navigateMenu}
         /> 
-    
         <View 
           style={{paddingTop: Platform.OS === 'ios' ? '1%' : '2.5%' }}> 
-          <SecondaryCoinHeader />
+          <SecondaryCoinHeader 
+            sendFunction={this.navigateToSend} 
+            activityFunction={this.navigateToActivity} 
+            receiveFunction={()=>  this.navigateToReceive}
+            />
         </View>
-
         <View style={{ width:'100%', alignItems:'center' }}>
             <Card
               containerStyle={{ 
@@ -204,34 +221,34 @@ class CoinSend extends Component {
                 <Text style={styles.cardText}>
                   Send Ether by scanning someone's QR code or public address.
                 </Text>
-
                 <View style= {styles.barcodeImage}>
                   <TouchableOpacity
-                      onPress={() => console.log("pressed QR Code")} >
+                      onPress= {() => this.navigate()} >
                       <Image
                           source={require('../../../../assets/icons/barcode.png')}
                           style={{height:75, width:75}}
                       /> 
                   </TouchableOpacity>
                 </View>
-
                 <View style={{ paddingBottom: '6%',}}>
-                <FormInput
-                    placeholder={"Public Address"}
-                    onChangeText={this.renderAddress.bind(this)}
-                    inputStyle={{
-                      width:'100%', 
-                      flexWrap: 'wrap', 
-                      color:'#12c1a2', 
-                      fontSize:16, 
-                      fontFamily: "WorkSans-Light",
-                      letterSpacing:0.4
-                    }}
+                  <FormInput
+                      placeholder={"Public Address"}
+                      onChangeText={this.renderAddress.bind(this)}                  
+                      ref={ref => this.inputAddress = ref}
+                      inputStyle={{
+                        width:'100%', 
+                        flexWrap: 'wrap', 
+                        color:'#12c1a2', 
+                        fontSize:16, 
+                        fontFamily: "WorkSans-Light",
+                        letterSpacing:0.4
+                      }}
                 /> 
                 </View>
                 <FormInput
                     placeholder={"Amount"}
                     onChangeText={this.renderValue.bind(this)}
+                    ref={ref => this.inputAmount = ref}
                     inputStyle={{
                       width:'100%', 
                       flexWrap: 'wrap', 
@@ -242,102 +259,33 @@ class CoinSend extends Component {
                     }}
                 /> 
                 <Text style={styles.transactionFee} > 
-                  Transaction Fee Total 0 Eth 0 USD
+                  Transaction Fee Total {this.state.value} Eth
                 </Text>
-              
             </Card>
         </View>
-
-         <View style={styles.btnContainer} >
-            <Button
-              title='Reset'
-              disabled={this.state.toAddress === "" && this.state.value == 0}
-              icon={{ size: 28 }}
-              buttonStyle={{
-                backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
-                height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 5, marginTop: 5.5
-              }}
-              textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
-              onPress={() => this.resetFields()} />
-            <Button
-              title='Next'
-              disabled={this.state.toAddress === "" || this.state.value == 0}
-              icon={{ size: 28 }}
-              buttonStyle={{
-                backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
-                height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 30, marginTop: 5.5
-              }}
-              textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
-              onPress={() => this.sendTransaction()}
-            />
-          </View>
-
-
-        {/* <View styles={{flexDirection:'row', justifyContent:"space-between", backgroundColor:"purple", flex:1}}> 
-          <View style={{backgroundColor: 'green', width: '40%'}}> 
-            <ClearButton 
-                  onClickFunction={this.navigate}
-                  buttonText="Reset"                  
-              />     
-          </View>
-          <View style={{ backgroundColor: 'blue', width: '40%'}}> 
-             <LinearButton 
-                  onClickFunction={this.navigate}
-                  buttonText="Next"                  
-              />        
-          </View>             
-        </View> */}
-      
-        {/* <View style={styles.contentContainer} >
-          <View style={styles.form} >
-            <FormLabel>Send To </FormLabel>
-            <View style={{ flexDirection: 'row' }}>
-              <Button
-                title='QR'
-                onPress={() => this.navigate()}
-                style={styles.qr}
-              />
-              <FormInput style={styles.formInputAddress}
-                onChangeText={this.renderAddress.bind(this)}
-                value={this.props.addressData}
-                ref={ref => this.inputAddress = ref}
-                containerStyle={{ width: "65%", marginTop: 0, marginBottom: 0 }}
-              />
-            </View>
-            <FormLabel>Amount </FormLabel>
-            <FormInput style={styles.formInputElement}
-              onChangeText={this.renderValue.bind(this)}
-              ref={ref => this.inputAmount = ref}
-            />
-            <FormLabel>
-              Transaction Fee
-              Total  {this.state.value} ETH 0 USD
-            </FormLabel>
-          </View>
-          <View style={styles.btnContainer} >
-            <Button
-              title='Reset'
-              disabled={this.state.toAddress === "" && this.state.value == 0}
-              icon={{ size: 28 }}
-              buttonStyle={{
-                backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
-                height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 5, marginTop: 5.5
-              }}
-              textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
-              onPress={() => this.resetFields()} />
-            <Button
-              title='Next'
-              disabled={this.state.toAddress === "" || this.state.value == 0}
-              icon={{ size: 28 }}
-              buttonStyle={{
-                backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
-                height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 30, marginTop: 5.5
-              }}
-              textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
-              onPress={() => this.sendTransaction()}
-            />
-          </View>
-        </View> */}
+        <View style={styles.btnContainer} >
+          <Button
+            title='Reset'
+            disabled={this.state.toAddress === "" && this.state.value == 0}
+            icon={{ size: 28 }}
+            buttonStyle={{
+              backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
+              height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 5, marginTop: 5.5
+            }}
+            textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
+            onPress={() => this.resetFields()} />
+          <Button
+            title='Next'
+            disabled={this.state.toAddress === "" || this.state.value == 0}
+            icon={{ size: 28 }}
+            buttonStyle={{
+              backgroundColor: 'transparent', borderColor: '#2a2a2a', borderWidth: 1, borderRadius: 100, width: 300,
+              height: 50, padding: 10, alignItems: 'center', justifyContent: 'center', marginBottom: 30, marginTop: 5.5
+            }}
+            textStyle={{ textAlign: 'center', color: '#2a2a2a', fontSize: 15 }}
+            onPress={() => this.sendTransaction()}
+          />
+        </View>
       </View >
     )
   }
@@ -353,16 +301,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fafbfe",
     width:"100%", 
     height:'100%'
-  },
-  contentContainer: {
-    marginTop: 25
-  },
-  form: {
-    width: 340
-  },
-  qr: {
-    marginLeft: 5,
-    marginTop: 10
   },
   btnContainer: {
     flex: 1,
