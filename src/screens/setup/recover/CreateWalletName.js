@@ -47,16 +47,7 @@ class CreateWalletName extends Component {
     render() {
         return (
             <View style={styles.mainContainer}>   
-             <BackNavBar onClickFunction={this.navigateBack }  />
-                {/* <View style={styles.headerBack}> 
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('createOrRestore')} >
-                        <Image
-                            source={require('../../../assets/icons/back.png')}
-                            style={{height:20, width:20}}
-                        /> 
-                    </TouchableOpacity>
-                  </View>    */}
+             <BackNavBar onClickFunction={this.navigateBack }  />                
                 <Text style={styles.textHeader} >Wallet Name</Text>                               
                 <View style={styles.contentContainer} >
                     <Card containerStyle={{ 
@@ -104,15 +95,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafbfe",
         width: '100%',
         height: '100%'
-    },
-    headerBack: {
-        marginTop: Platform.OS === 'ios' ? '5%' : '5%',
-        ...Platform.select({
-          ios: { backgroundColor: '#fafbfe'},
-          android: { backgroundColor: '#fafbfe'}
-        }),
-        marginLeft: '9%',       
-      },   
+    }, 
     contentContainer : {
         alignItems: 'center',
         flex: 1

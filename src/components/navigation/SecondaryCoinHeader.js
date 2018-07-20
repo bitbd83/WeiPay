@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
         paddingBottom: '2%',
         marginRight: '9%',
         marginLeft: '9%',
-        // paddingTop: '5%'
       },
       headerSend :{
         alignSelf:'flex-start',

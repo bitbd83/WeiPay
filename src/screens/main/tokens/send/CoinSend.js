@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, Alert, Platform, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { FormInput, FormLabel, Button, Card } from 'react-native-elements';
 import { NavigationActions, DrawerNavigator } from "react-navigation";
@@ -202,6 +202,18 @@ class CoinSend extends Component {
                 <Text style={styles.cardText}>
                   Send Ether by scanning someone's QR code or public address.
                 </Text>
+
+                <View style= {styles.barcodeImage}>
+                  <TouchableOpacity
+                      onPress={() => console.log("pressed QR Code")} >
+                      <Image
+                          source={require('../../../../assets/icons/barcode.png')}
+                          style={{height:75, width:75}}
+                      /> 
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ paddingBottom: '6%',}}>
                 <FormInput
                     placeholder={"Public Address"}
                     onChangeText={this.renderAddress.bind(this)}
@@ -214,6 +226,7 @@ class CoinSend extends Component {
                       letterSpacing:0.4
                     }}
                 /> 
+                </View>
                 <FormInput
                     placeholder={"Amount"}
                     onChangeText={this.renderValue.bind(this)}
@@ -314,20 +327,27 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
+  barcodeImage: {
+    paddingTop: '5%', 
+    paddingBottom:'5%',
+    paddingLeft: '5%',
+  },
   cardText : {
-    paddingBottom: '20%',
-    paddingTop: '5%',
+    paddingBottom: '2.5%',
+    paddingTop: '8%',
     paddingLeft: '5%',
     paddingRight: '5%',
     fontFamily: "WorkSans-Light",  
     color: '#000000',
     fontSize: 16,
+    lineHeight: 22
 },
   transactionFee : {
     fontFamily: "WorkSans-Light",
     fontSize: 9,
     letterSpacing: 0.3,
-    paddingLeft: '5%',
+    paddingLeft: '7%',
+    paddingTop: '2.5%'
   }
 })
 
