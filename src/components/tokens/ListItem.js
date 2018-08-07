@@ -95,7 +95,7 @@ class CoinListItem extends Component {
                       <Text style={styles.mainTitleText} >{coin.symbol}</Text>
                     </View>
                     <View style={styles.subtitleContainer}>
-                      <Text style={styles.subTitleText} >{coin.title}</Text>
+                      <Text style={styles.subTitleText} >{coin.name}</Text>
                     </View>
                   </View>
                 </View>
