@@ -9,7 +9,9 @@ import LinearButton from '../../../components/LinearGradient/LinearButton';
 import { addTokenInfo } from '../../../actions/ActionCreator';
 import BackWithMenuNav from '../../../components/customPageNavs/BackWithMenuNav';
 import BoxShadowCard from '../../../components/ShadowCards/BoxShadowCard';
-
+import ERC20ABI from '../../../constants/data/json/ERC20ABI.json';
+const ethers = require('ethers');
+const utils = ethers.utils;
 
 /**
  * Screen is used to display the wallet portfolio of the user, which contains the
@@ -39,6 +41,14 @@ class Portfolio extends Component {
     const navigateToAddToken = NavigationActions.navigate({ routeName: 'coinSend' });
     this.props.navigation.dispatch(navigateToAddToken);
   };
+
+  getTokenBalance(token){
+    console.log('Getting Balance')
+    const currentWallet = this.props.newWallet.wallet;
+    const contract = new ethers.Contract(token.address, ERC20ABI, currentWallet)
+    console.log("Wallet Address: ");
+    console.log(currentWallet.address);
+  }
  
   /**
    * Returns a ListItem component specific to the properties of the token parameter
@@ -48,12 +58,13 @@ class Portfolio extends Component {
         <TouchableOpacity
           onPress={() => {
             this.props.addTokenInfo(token)
-            if(token.type === "PortfolioToken") {
-              this.props.navigation.navigate("coinSend")
-            }
-            else {
-              this.props.navigation.navigate("coinSend")
-              }
+            this.getTokenBalance(token)
+            // if(token.type === "PortfolioToken") {
+            //   this.props.navigation.navigate("coinSend")
+            // }
+            // else {
+            //   this.props.navigation.navigate("coinSend")
+            //   }
             }}
           style={styles.listItemParentContainer}
           >
