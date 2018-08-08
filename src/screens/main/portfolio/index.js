@@ -10,6 +10,7 @@ import { addTokenInfo } from '../../../actions/ActionCreator';
 import BackWithMenuNav from '../../../components/customPageNavs/BackWithMenuNav';
 import BoxShadowCard from '../../../components/ShadowCards/BoxShadowCard';
 import ERC20ABI from '../../../constants/data/json/ERC20ABI.json';
+import Provider from '../../../constants/Providers';
 const ethers = require('ethers');
 const utils = ethers.utils;
 
@@ -45,9 +46,20 @@ class Portfolio extends Component {
   getTokenBalance(token){
     console.log('Getting Balance')
     const currentWallet = this.props.newWallet.wallet;
-    const contract = new ethers.Contract(token.address, ERC20ABI, currentWallet)
+    //const contract = new ethers.Contract(token.address, ERC20ABI, Provider)
     console.log("Wallet Address: ");
     console.log(currentWallet.address);
+    console.log('Token Address');
+    console.log(token.address);
+    
+    const contract = new ethers.Contract(token.address, ERC20ABI, currentWallet)
+    contract.balanceOf(currentWallet.address).then(function(balance) {
+      var text = ethers.utils.formatEther(balance);
+      console.log("Balance Before:", text);
+      
+  })
+
+    
   }
  
   /**
