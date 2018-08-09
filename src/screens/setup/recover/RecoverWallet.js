@@ -35,6 +35,8 @@ class RecoverWallet extends Component {
             */
         const wallet = new ethers.Wallet('0x923ed0eca1cee12c1c3cf7b8965fef00a2aa106124688a48d925a778315bb0e5');
         wallet.provider = provider;
+        console.log(wallet.address);
+        
         this.props.newWalletCreation(wallet); //pass state to redux to save it
         this.props.navigation.dispatch(navigateToTokens);
       } catch (err) {

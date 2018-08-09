@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import {
- View, Text, StyleSheet, ListView, Image, TouchableOpacity, ScrollView, Dimensions, SafeAreaView 
+  View, Text, StyleSheet, ListView, Image, TouchableOpacity, ScrollView, Dimensions, SafeAreaView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import RF from 'react-native-responsive-fontsize';
-import { NavigationActions } from "react-navigation";
+import { NavigationActions } from 'react-navigation';
 import LinearButton from '../../../components/LinearGradient/LinearButton';
 import { addTokenInfo } from '../../../actions/ActionCreator';
 import BackWithMenuNav from '../../../components/customPageNavs/BackWithMenuNav';
 import BoxShadowCard from '../../../components/ShadowCards/BoxShadowCard';
 import ERC20ABI from '../../../constants/data/json/ERC20ABI.json';
 import Provider from '../../../constants/Providers';
+
 const ethers = require('ethers');
+
 const utils = ethers.utils;
 
 /**
@@ -19,6 +21,21 @@ const utils = ethers.utils;
  * tokens and the balance of the wallet
  */
 class Portfolio extends Component {
+  // constructor(props) {
+  //   super(props)
+
+  //   let tokenBalance = {}
+  //   for (var i = 0; i < this.props.newWallet.tokens.length; i ++ ){
+  //     let token = this.props.newWallet.tokens[i]
+  //     tokenBalance[token.name] = this.getTokenBalance(token);
+  //   }
+
+  //   console.log('In constructor');
+
+  //   console.log(tokenBalance);
+
+  // }
+
   /**
    * LifeCycle Method (executes before the component has been rendered)
    * Sets the list of tokens reterived from the global state variable as the
@@ -28,13 +45,13 @@ class Portfolio extends Component {
     const data = this.props.newWallet.tokens;
     console.log(this.props.newWallet.tokens);
     const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => {return r1 !== r2},
+      rowHasChanged: (r1, r2) => { return r1 !== r2; },
     });
     this.dataSource = ds.cloneWithRows(data);
   }
 
   navigate = () => {
-    const navigateToAddToken = NavigationActions.navigate({ routeName: "AddCoin" });
+    const navigateToAddToken = NavigationActions.navigate({ routeName: 'AddCoin' });
     this.props.navigation.dispatch(navigateToAddToken);
   };
 
@@ -43,25 +60,26 @@ class Portfolio extends Component {
     this.props.navigation.dispatch(navigateToAddToken);
   };
 
-  getTokenBalance(token){
-    console.log('Getting Balance')
+  getTokenBalance(token) {
     const currentWallet = this.props.newWallet.wallet;
-    //const contract = new ethers.Contract(token.address, ERC20ABI, Provider)
-    console.log("Wallet Address: ");
-    console.log(currentWallet.address);
-    console.log('Token Address');
-    console.log(token.address);
-    
-    const contract = new ethers.Contract(token.address, ERC20ABI, currentWallet)
-    contract.balanceOf(currentWallet.address).then(function(balance) {
-      var text = ethers.utils.formatEther(balance);
-      console.log("Balance Before:", text);
-      
-  })
+    if (token.address === '') {
+      const etherString = Provider.getBalance(currentWallet.address).then((balance) => {
+        console.log(utils.formatEther(balance));   
+      });
+      console.log(etherString);
 
-    
+      return etherString;
+    }
+    // ---- This code works when the wallet provider have been changed to the mainnetwork
+    // const contract = new ethers.Contract(token.address, ERC20ABI, currentWallet)
+    // contract.balanceOf(currentWallet.address).then(function(balance) {
+    // var text = ethers.utils.formatEther(balance);
+    // console.log("Balance Before:", text);
+    // return text
+    // })
+    return 'NA';
   }
- 
+
   /**
    * Returns a ListItem component specific to the properties of the token parameter
    */
@@ -69,15 +87,15 @@ class Portfolio extends Component {
     return (
         <TouchableOpacity
           onPress={() => {
-            this.props.addTokenInfo(token)
-            this.getTokenBalance(token)
+            this.props.addTokenInfo(token);
+            this.getTokenBalance(token);
             // if(token.type === "PortfolioToken") {
             //   this.props.navigation.navigate("coinSend")
             // }
             // else {
             //   this.props.navigation.navigate("coinSend")
             //   }
-            }}
+          }}
           style={styles.listItemParentContainer}
           >
           <View>
@@ -87,7 +105,7 @@ class Portfolio extends Component {
                   <View style={styles.imageContainer} >
                     <Image
                       style={styles.img}
-                      source={ {uri: token.logo.src} }
+                      source={ { uri: token.logo.src } }
                     />
                   </View>
                 </View>
@@ -101,7 +119,9 @@ class Portfolio extends Component {
                     </View>
                   </View>
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', paddingBottom: '1.5%', paddingTop: '1.5%', paddingRight: '5%',  }}>
+                <View style={{
+                  flex: 1, justifyContent: 'center', paddingBottom: '1.5%', paddingTop: '1.5%', paddingRight: '5%',
+                }}>
                   <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
                     <Text style={styles.listItemCryptoValue}>0</Text>
                     <Text style={styles.listItemFiatValue}>$2444</Text>
@@ -147,7 +167,7 @@ class Portfolio extends Component {
               />
           </View>
           <View style={styles.footerContainer}>
-            <Text style={styles.textFooter}  >Powered by ChainSafe </Text>
+            <Text style={styles.textFooter} >Powered by ChainSafe </Text>
           </View>
         </View>
       </SafeAreaView>
@@ -239,9 +259,9 @@ const styles = StyleSheet.create({
     flex: 0.75,
     paddingBottom: '2%',
   },
-  textHeader: {       
-    fontFamily: "Cairo-Light",
-    fontSize: RF(4),      
+  textHeader: {
+    fontFamily: 'Cairo-Light',
+    fontSize: RF(4),
     paddingLeft: '9%',
     color: '#1a1f3e',
     flex: 0.75,
@@ -256,11 +276,11 @@ const styles = StyleSheet.create({
     fontFamily: 'WorkSans-Medium',
     marginLeft: '9%',
     color: '#27c997',
-    fontSize: RF(3),  
-  },   
-  headerValueCurrency : {
-    fontSize:11,
-    fontFamily: "WorkSans-Regular", 
+    fontSize: RF(3),
+  },
+  headerValueCurrency: {
+    fontSize: 11,
+    fontFamily: 'WorkSans-Regular',
     color: '#27c997',
     justifyContent: 'center',
   },
@@ -286,15 +306,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flex: 1,
   },
-  textFooter : {
-    fontFamily: "WorkSans-Regular",
+  textFooter: {
+    fontFamily: 'WorkSans-Regular',
     fontSize: RF(1.7),
     marginBottom: '5%',
-    alignItems: 'center' ,
+    alignItems: 'center',
     color: '#c0c0c0',
-    letterSpacing: 0.5
-  }
-})
+    letterSpacing: 0.5,
+  },
+});
 
 /**
  * Method is used  to reterive the newWallet object
