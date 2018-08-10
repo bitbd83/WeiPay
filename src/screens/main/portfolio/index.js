@@ -60,16 +60,19 @@ class Portfolio extends Component {
     this.props.navigation.dispatch(navigateToAddToken);
   };
 
-  getTokenBalance(token) {
+  async getTokenBalance(token) {
     const currentWallet = this.props.newWallet.wallet;
     if (token.address === '') {
-      const etherString = Provider.getBalance(currentWallet.address).then((balance) => {
-        console.log(utils.formatEther(balance));   
+      const etherString = await Provider.getBalance(currentWallet.address).then((balance) => {
+        console.log(utils.formatEther(balance));
+      }).catch((err) => {
+        console.log('Error');
       });
-      console.log(etherString);
+        console.log(etherString);
 
       return etherString;
     }
+
     // ---- This code works when the wallet provider have been changed to the mainnetwork
     // const contract = new ethers.Contract(token.address, ERC20ABI, currentWallet)
     // contract.balanceOf(currentWallet.address).then(function(balance) {
@@ -88,13 +91,13 @@ class Portfolio extends Component {
         <TouchableOpacity
           onPress={() => {
             this.props.addTokenInfo(token);
-            this.getTokenBalance(token);
-            // if(token.type === "PortfolioToken") {
-            //   this.props.navigation.navigate("coinSend")
-            // }
-            // else {
-            //   this.props.navigation.navigate("coinSend")
-            //   }
+            // this.getTokenBalance(token);
+            if(token.type === "PortfolioToken") {
+              this.props.navigation.navigate("coinSend")
+            }
+            else {
+              this.props.navigation.navigate("coinSend")
+              }
           }}
           style={styles.listItemParentContainer}
           >
@@ -123,7 +126,7 @@ class Portfolio extends Component {
                   flex: 1, justifyContent: 'center', paddingBottom: '1.5%', paddingTop: '1.5%', paddingRight: '5%',
                 }}>
                   <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <Text style={styles.listItemCryptoValue}>0</Text>
+                    <Text style={styles.listItemCryptoValue}>{this.getTokenBalance(token)}</Text>
                     <Text style={styles.listItemFiatValue}>$2444</Text>
                   </View>
                 </View>
