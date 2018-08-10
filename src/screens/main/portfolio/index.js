@@ -24,12 +24,10 @@ class Portfolio extends Component {
   constructor(props) {
     super(props);
     
-    let data = this.props.newWallet.tokens
-    console.log(data);
-    
+    let data = this.props.newWallet.tokens;
+        
     for (let i = 0; i < data.length; i += 1) {
       data[i].balance = this.props.newWallet.balance;
-      console.log('Balance: '); 
     }
     console.log('0000000');
     
