@@ -24,11 +24,10 @@ class Portfolio extends Component {
   constructor(props) {
     super(props);
     
-    let data = this.props.newWallet.tokens;
-        
-    for (let i = 0; i < data.length; i += 1) {
-      data[i].balance = this.props.newWallet.balance;
-    }
+    let data = this.props.newWallet.balance
+    // for (let i = 0; i < data.length; i += 1) {
+    //   data[i].balance = this.props.newWallet.balance;
+    // }
     console.log('0000000');
     
     console.log(data);
@@ -54,21 +53,21 @@ class Portfolio extends Component {
     this.dataSource = ds.cloneWithRows(data);
   }
 
-  // shouldComponentUpdate (nextProps, nextState) {
-  //   const { balance } = nextState;
-  //   console.log('-----------------------');
-  //   console.log('Current State Balance: ', this.state.balance);
-  //   console.log('In the global state ', this.props.newWallet.balance);
-  //   console.log('New State Balance: ', balance);
-  //   console.log('-----------------------');
+  shouldComponentUpdate (nextProps, nextState) {
+    const { balance } = nextState;
+    console.log('-----------------------');
+    console.log('Current State Balance: ', this.state.balance);
+    console.log('In the global state ', this.props.newWallet.balance);
+    console.log('New State Balance: ', balance);
+    console.log('-----------------------');
 
     
-  //   if (this.state.balance !== this.props.newWallet.balance) {
-  //     console.log('Update Scrolling');
-  //     return true;
-  //   }
-  //   return false;
-  // }
+    if (this.state.balance !== this.props.newWallet.balance) {
+      console.log('Update Scrolling');
+      return true;
+    }
+    return false;
+  }
 
   navigate = () => {
     const navigateToAddToken = NavigationActions.navigate({ routeName: 'AddCoin' });
@@ -87,6 +86,9 @@ class Portfolio extends Component {
         this.props.getCoinBalance(utils.formatEther(balance))
         
         this.setState({ balance: this.props.newWallet.balance })
+        
+
+
       }).catch((err) => {
         console.log('Error');
       });
@@ -112,7 +114,7 @@ class Portfolio extends Component {
   renderRow = (token) => {
     console.log('**********************');
     console.log('In Render');
-    console.log(this.state.balance);
+    console.log(token.balance);
     console.log('**********************');
 
     return (
