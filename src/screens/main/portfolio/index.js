@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import RF from 'react-native-responsive-fontsize';
 import { NavigationActions } from 'react-navigation';
 import LinearButton from '../../../components/LinearGradient/LinearButton';
-import { addTokenInfo } from '../../../actions/ActionCreator';
+import { addTokenInfo, getCoinBalance } from '../../../actions/ActionCreator';
 import BackWithMenuNav from '../../../components/customPageNavs/BackWithMenuNav';
 import BoxShadowCard from '../../../components/ShadowCards/BoxShadowCard';
 import ERC20ABI from '../../../constants/data/json/ERC20ABI.json';
@@ -21,20 +21,13 @@ const utils = ethers.utils;
  * tokens and the balance of the wallet
  */
 class Portfolio extends Component {
-  // constructor(props) {
-  //   super(props)
-
-  //   let tokenBalance = {}
-  //   for (var i = 0; i < this.props.newWallet.tokens.length; i ++ ){
-  //     let token = this.props.newWallet.tokens[i]
-  //     tokenBalance[token.name] = this.getTokenBalance(token);
-  //   }
-
-  //   console.log('In constructor');
-
-  //   console.log(tokenBalance);
-
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      balance: 0 ,
+      check: 1,
+    };
+  }
 
   /**
    * LifeCycle Method (executes before the component has been rendered)
@@ -50,6 +43,22 @@ class Portfolio extends Component {
     this.dataSource = ds.cloneWithRows(data);
   }
 
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   const { balance } = nextState;
+  //   console.log('-----------------------');
+  //   console.log('Current State Balance: ', this.state.balance);
+  //   console.log('In the global state ', this.props.newWallet.balance);
+  //   console.log('New State Balance: ', balance);
+  //   console.log('-----------------------');
+
+    
+  //   if (this.state.balance !== this.props.newWallet.balance) {
+  //     console.log('Update Scrolling');
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
   navigate = () => {
     const navigateToAddToken = NavigationActions.navigate({ routeName: 'AddCoin' });
     this.props.navigation.dispatch(navigateToAddToken);
@@ -63,14 +72,15 @@ class Portfolio extends Component {
   async getTokenBalance(token) {
     const currentWallet = this.props.newWallet.wallet;
     if (token.address === '') {
-      const etherString = await Provider.getBalance(currentWallet.address).then((balance) => {
-        console.log(utils.formatEther(balance));
+      await Provider.getBalance(currentWallet.address).then((balance) => {
+        this.props.getCoinBalance(utils.formatEther(balance))
+        this.setState({ balance: this.props.newWallet.balance })
       }).catch((err) => {
         console.log('Error');
       });
-        console.log(etherString);
-
-      return etherString;
+      // console.log('Checking');
+      // console.log(this.state.balance);
+      this.setState({ check: 1 })
     }
 
     // ---- This code works when the wallet provider have been changed to the mainnetwork
@@ -80,6 +90,7 @@ class Portfolio extends Component {
     // console.log("Balance Before:", text);
     // return text
     // })
+    this.setState({ balance: 'NA' });
     return 'NA';
   }
 
@@ -87,17 +98,22 @@ class Portfolio extends Component {
    * Returns a ListItem component specific to the properties of the token parameter
    */
   renderRow = (token) => {
+    console.log('**********************');
+    console.log('In Render');
+    console.log(this.state.balance);
+    console.log('**********************');
+
     return (
         <TouchableOpacity
           onPress={() => {
             this.props.addTokenInfo(token);
-            // this.getTokenBalance(token);
-            if(token.type === "PortfolioToken") {
-              this.props.navigation.navigate("coinSend")
-            }
-            else {
-              this.props.navigation.navigate("coinSend")
-              }
+            this.getTokenBalance(token);
+            // if(token.type === "PortfolioToken") {
+            //   this.props.navigation.navigate("coinSend")
+            // }
+            // else {
+            //   this.props.navigation.navigate("coinSend")
+            //   }
           }}
           style={styles.listItemParentContainer}
           >
@@ -126,7 +142,7 @@ class Portfolio extends Component {
                   flex: 1, justifyContent: 'center', paddingBottom: '1.5%', paddingTop: '1.5%', paddingRight: '5%',
                 }}>
                   <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <Text style={styles.listItemCryptoValue}>{this.getTokenBalance(token)}</Text>
+                    <Text style={styles.listItemCryptoValue} >{this.state.check}</Text>
                     <Text style={styles.listItemFiatValue}>$2444</Text>
                   </View>
                 </View>
@@ -142,6 +158,8 @@ class Portfolio extends Component {
    * The component also provides the option to add/delete tokens
    */
   render() {
+    
+    
     return (
       <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.mainContainer} >
@@ -243,7 +261,7 @@ const styles = StyleSheet.create({
   },
   listItemCryptoValue: {
     alignItems: 'flex-end',
-    fontSize: RF(3),
+    fontSize: RF(2),
     fontFamily: 'Cairo-Regular',
     letterSpacing: 0.5,
     color: 'black',
@@ -329,4 +347,4 @@ function mapStateToProps({ newWallet }) {
   return { newWallet };
 }
 
-export default connect(mapStateToProps, { addTokenInfo })(Portfolio);
+export default connect(mapStateToProps, { addTokenInfo, getCoinBalance })(Portfolio);

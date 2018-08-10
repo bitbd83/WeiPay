@@ -5,6 +5,7 @@ import data from '../../constants/data/json/coins.json';
 const INITIAL_STATE = {
   newWallet: false,
   walletName: '',
+  balance: 'NA',
   tokens: [],
   wallet: null,
   backupPassphrase: '',
@@ -43,6 +44,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, current_token: action.payload };
     case actions.DEBUG_MODE:
       return { ...state, debugMode: true };
+    case actions.COIN_BALANCE:
+      return { ...state, balance: action.payload };
     default:
       return state;
   }

@@ -149,3 +149,8 @@ export function enterDebug() {
   };
 }
 
+export function getCoinBalance(balance) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.COIN_BALANCE, payload: balance });
+  };
+}
