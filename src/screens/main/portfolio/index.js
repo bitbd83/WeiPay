@@ -23,9 +23,22 @@ const utils = ethers.utils;
 class Portfolio extends Component {
   constructor(props) {
     super(props);
+    
+    let data = this.props.newWallet.tokens
+    console.log(data);
+    
+    for (let i = 0; i < data.length; i += 1) {
+      data[i].balance = this.props.newWallet.balance;
+      console.log('Balance: '); 
+    }
+    console.log('0000000');
+    
+    console.log(data);
+
     this.state = {
       balance: 0 ,
-      check: 1,
+      check: 0,
+      tokens: data,
     };
   }
 
@@ -35,7 +48,7 @@ class Portfolio extends Component {
    * data source for the listView
    */
   componentWillMount() {
-    const data = this.props.newWallet.tokens;
+    const data = this.state.tokens;
     console.log(this.props.newWallet.tokens);
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => { return r1 !== r2; },
@@ -74,6 +87,7 @@ class Portfolio extends Component {
     if (token.address === '') {
       await Provider.getBalance(currentWallet.address).then((balance) => {
         this.props.getCoinBalance(utils.formatEther(balance))
+        
         this.setState({ balance: this.props.newWallet.balance })
       }).catch((err) => {
         console.log('Error');
@@ -142,7 +156,7 @@ class Portfolio extends Component {
                   flex: 1, justifyContent: 'center', paddingBottom: '1.5%', paddingTop: '1.5%', paddingRight: '5%',
                 }}>
                   <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <Text style={styles.listItemCryptoValue} >{this.state.check}</Text>
+                    <Text style={styles.listItemCryptoValue} >{token.balance}</Text>
                     <Text style={styles.listItemFiatValue}>$2444</Text>
                   </View>
                 </View>
@@ -172,7 +186,7 @@ class Portfolio extends Component {
           </View>
           <Text style={styles.textHeader}>Holdings</Text>
           <View style={styles.accountValueHeader}>
-              <Text style={styles.headerValue}>0$</Text>
+              <Text style={styles.headerValue}>{this.state.check}</Text>
               <Text style={styles.headerValueCurrency}> USD</Text>
           </View>
           <View style={styles.scrollViewContainer}>
