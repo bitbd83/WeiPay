@@ -16,6 +16,11 @@ import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 const CustomDrawerContentComponent = props => (
   <View style={styles.customContainer}>
     <View>
+
+      <View>
+        <Image source={require('../../assets/icons/cancel.png')} />
+      </View>
+
       <DrawerItems 
         {...props} 
         activeBackgroundColor={'#f3f3f3'}  
