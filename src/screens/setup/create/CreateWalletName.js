@@ -82,7 +82,7 @@ class CreateWalletName extends Component {
                             backPage={'createOrRestore'}
                         />
                     </View>                    
-                    <Text style={textHeader} >Wallet Name</Text>
+                    <Text style={textHeader}>Wallet Name</Text>
                     <View style={boxShadowContainer}>
                         <View style={contentContainer}>
                             <BoxShadowCard>
